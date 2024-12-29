@@ -27,9 +27,9 @@ if st.button("Get Data"):
 
           if hist_data is not None and stock_info is not None:
               # Stock info header
-              st.subheader(f"{stock_info.get('longName', tickerSymbol)} ({tickerSymbol})")
-              st.markdown(f"**Sector:** {stock_info.get('sector', 'N/A')} | **Industry:** {stock_info.get('industry', 'N/A')}")
-              st.markdown(f"**RecommendationKey:** {stock_info.get('recommendationKey', 'N/A')} | **Currency:**")
+              st.subheader(f"{stock_info.get('name', tickerSymbol)} ({tickerSymbol})")
+              st.markdown(f"**Industry:** {stock_info.get('finnhubIndustry', 'N/A')}")
+              st.markdown(f"**Exchange:** {stock_info.get('exchange', 'N/A')} | **Currency:** {stock_info.get('currency', 'N/A')}")
               #st.write(stock_info.calendar)
               #st.write(stock_info.analyst_price_targets)
               st.write(hist_data)
