@@ -31,12 +31,19 @@ latest_strong_buy = latest_recommendation['strongBuy']
 latest_strong_sell = latest_recommendation['strongSell']
 latest_period = latest_recommendation['period']
 
-st.write("Recommendation")
-st.write(latest_strong_buy)
+# Create recommendation bar chart
+fig, ax = plt.subplots(figsize=(10, 6))
+recommendations = ['Strong Buy', 'Buy', 'Hold', 'Sell', 'Strong Sell']
+values = [latest_strong_buy, latest_buy, latest_hold, latest_sell, latest_strong_sell]
 
-print(finnhub_client.recommendation_trends('AAPL'))
-print(start_date)
-print(end_date)
+ax.bar(recommendations, values)
+ax.set_title(f'Analyst Recommendations ({latest_period})')
+ax.set_ylabel('Number of Analysts')
+plt.xticks(rotation=45)
+
+# Display the chart in Streamlit
+st.subheader("Analyst Recommendations")
+st.pyplot(fig)
 # Fetch and display data
 if st.button("Get Data"):
   with st.spinner("Fetching data..."):
