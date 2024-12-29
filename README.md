@@ -44,3 +44,6 @@ The dashboard will be accessible through the webview.
 - `app.py`: Main application file with Streamlit interface
 - `utils.py`: Utility functions for data fetching
 - `main.py`: Entry point file
+
+
+![image](image.png)
