@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from utils import get_stock_data
 import logging
+import plotly.express as px
 
 import finnhub
 import os 
@@ -20,30 +21,42 @@ tickerSymbol = st.text_input("Enter a ticker symbol eg AAPL, MSFT, TSLA", )
 start_date = st.date_input("Start Date",pd.to_datetime('2020-01-01'))
 end_date = st.date_input("End Date", pd.to_datetime("today"))
 
+# TODO: Move to button with get data
 # FINNHUB RECO TEST
 fiinhub_api_key  = os.environ['FINNHUB_API_KEY']
 finnhub_client = finnhub.Client(api_key = fiinhub_api_key)
-latest_recommendation = finnhub_client.recommendation_trends('AAPL')[0]
-latest_buy = latest_recommendation['buy']
-latest_hold = latest_recommendation['hold']
-latest_sell = latest_recommendation['sell']
-latest_strong_buy = latest_recommendation['strongBuy']
-latest_strong_sell = latest_recommendation['strongSell']
+latest_recommendation = finnhub_client.recommendation_trends('NVDA')[0]
 latest_period = latest_recommendation['period']
+# Prepare data for the bar chart
+data = {
+    "Category": ["Buy", "Hold", "Sell", "Stong Buy", "Strong Sell"],
+    "Values": [
+        latest_recommendation["buy"],
+        latest_recommendation["hold"],
+        latest_recommendation["sell"],
+        latest_recommendation["strongBuy"],
+        latest_recommendation["strongSell"]
+    ]
+}
 
-# Create recommendation bar chart
-fig, ax = plt.subplots(figsize=(10, 6))
-recommendations = ['Strong Buy', 'Buy', 'Hold', 'Sell', 'Strong Sell']
-values = [latest_strong_buy, latest_buy, latest_hold, latest_sell, latest_strong_sell]
+# Convert to DataFrame for visualization
+df = pd.DataFrame(data)
 
-ax.bar(recommendations, values)
-ax.set_title(f'Analyst Recommendations ({latest_period})')
-ax.set_ylabel('Number of Analysts')
-plt.xticks(rotation=45)
+# Streamlit bar chart
+# Plotly bar chart with automatic color assignment
+fig = px.bar(
+    df,
+    x="Category",
+    y="Values",
+    title="Stock Recommendation Analysis for " + latest_recommendation["period"],
+    color="Category",  # Automatically assigns a distinct color to each category
+    labels={"Values": "Number of Recommendations", "Category": "Recommendation Type"}
+)
 
 # Display the chart in Streamlit
-st.subheader("Analyst Recommendations")
-st.pyplot(fig)
+st.plotly_chart(fig)
+
+
 # Fetch and display data
 if st.button("Get Data"):
   with st.spinner("Fetching data..."):
