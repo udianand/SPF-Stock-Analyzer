@@ -13,7 +13,7 @@ def render(tickerSymbol):
                 # FINNHUB Recommendation Trends
                 finhub_api_key = os.environ['FINNHUB_API_KEY']
                 finnhub_client = finnhub.Client(api_key=finhub_api_key)
-                latest_recommendation = finnhub_client.recommendation_trends('NVDA')[0]
+                latest_recommendation = finnhub_client.recommendation_trends(tickerSymbol)[0]
                 latest_period = latest_recommendation['period']
 
                 # Prepare data for the bar chart
