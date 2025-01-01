@@ -19,7 +19,7 @@ def render(tickerSymbol, start_date, end_date):
         with st.spinner("Fetching historical data..."):
             try:
                 hist_data, stock_info = get_stock_data(tickerSymbol, start_date, end_date)
-
+                
                 if hist_data is not None:
                     # Calculate technical indicators
                     hist_data["SMA_20"] = hist_data["Close"].rolling(window=20).mean()
@@ -77,16 +77,7 @@ def render(tickerSymbol, start_date, end_date):
 
                     st.plotly_chart(fig, use_container_width=True)
 
-                    # Display key statistics
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.metric("Current Price", f"${hist_data['Close'][-1]:.2f}")
-                    with col2:
-                        daily_return = ((hist_data['Close'][-1] / hist_data['Close'][-2]) - 1) * 100
-                        st.metric("Daily Return", f"{daily_return:.2f}%")
-                    with col3:
-                        st.metric("RSI", f"{hist_data['RSI'][-1]:.2f}")
-
+                    
                 else:
                     st.warning("No data available for the selected ticker.")
             except Exception as e:

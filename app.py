@@ -4,6 +4,7 @@ import logging
 import plotly.express as px
 from technicals import render as technicals_render
 from research import render as research_render
+from home import render as home_render
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -27,7 +28,7 @@ end_date = st.sidebar.date_input("End Date", pd.to_datetime("today"))
 # Tabs for Technicals and Research
 tab1, tab2, tab3 = st.tabs(["Home","Technicals", "Research"])
 with tab1:
-    st.write("This is the home tab.")
+    home_render(tickerSymbol, start_date, end_date)
 with tab2:
     technicals_render(tickerSymbol, start_date, end_date)
 with tab3:
