@@ -26,6 +26,6 @@ end_date = st.sidebar.date_input("End Date", pd.to_datetime("today"))
 # Tabs for Technicals and Research
 tab1, tab2 = st.tabs(["Technicals", "Research"])
 with tab1:
-    technicals.render(tickerSymbol, start_date, end_date)
+    technicals_render(tickerSymbol, start_date, end_date)
 with tab2:
     research_render(tickerSymbol)
