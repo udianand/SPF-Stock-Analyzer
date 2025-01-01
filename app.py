@@ -5,10 +5,8 @@ import pandas as pd
 from utils import get_stock_data
 import logging
 import plotly.express as px
-from tabs import technicals,research
-
-import finnhub
-import os 
+import technicals
+import research
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -32,3 +30,4 @@ with tab1:
     technicals.render(tickerSymbol, start_date, end_date)
 with tab2:
     research.render(tickerSymbol)
+    
