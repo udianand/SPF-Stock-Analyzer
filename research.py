@@ -42,4 +42,4 @@ def render(tickerSymbol):
                 st.plotly_chart(fig)
 
             except Exception as e:
-                st.error("Error fetching research data.")
+                st.error("Error fetching research data.: " + str(e))
