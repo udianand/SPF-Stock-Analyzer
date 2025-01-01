@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import logging
 import plotly.express as px
-from tabs import technicals_render, research_render
+from .tabs import technicals_render, research_render
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
