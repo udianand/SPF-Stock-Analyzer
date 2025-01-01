@@ -1,7 +1,7 @@
 
 # Contributing to Arthavedi
 
-Thank you for your interest in contributing to Arthavedi! Here's how you can help:
+Thank you for your interest in contributing to SPF Stock Analyzer! Here's how you can help:
 
 ## Getting Started
 
