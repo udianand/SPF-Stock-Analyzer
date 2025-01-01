@@ -25,8 +25,10 @@ start_date = st.sidebar.date_input("Start Date", pd.to_datetime('2020-01-01'))
 end_date = st.sidebar.date_input("End Date", pd.to_datetime("today"))
 
 # Tabs for Technicals and Research
-tab1, tab2 = st.tabs(["Technicals", "Research"])
+tab1, tab2, tab3 = st.tabs(["Home","Technicals", "Research"])
 with tab1:
-    technicals_render(tickerSymbol, start_date, end_date)
+    st.write("This is the home tab.")
 with tab2:
+    technicals_render(tickerSymbol, start_date, end_date)
+with tab3:
     research_render(tickerSymbol)
