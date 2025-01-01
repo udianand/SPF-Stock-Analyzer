@@ -1,7 +1,14 @@
 import streamlit as st
+import yfinance as yf
+import matplotlib.pyplot as plt
 import pandas as pd
+from utils import get_stock_data
 import logging
-from tabs import research, technicals
+import plotly.express as px
+from tabs import technicals,research
+
+import finnhub
+import os 
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

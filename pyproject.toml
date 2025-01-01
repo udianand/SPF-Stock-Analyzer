@@ -11,6 +11,5 @@ dependencies = [
     "pandas>=2.2.3",
     "plotly>=5.24.1",
     "streamlit>=1.41.1",
-    "tabs>=0.7.0",
     "yfinance>=0.2.51",
 ]
