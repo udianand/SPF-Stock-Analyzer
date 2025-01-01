@@ -199,6 +199,15 @@ wheels = [
 ]
 
 [[package]]
+name = "dill"
+version = "0.3.9"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/43/86fe3f9e130c4137b0f1b50784dd70a5087b911fe07fa81e53e0c4c47fea/dill-0.3.9.tar.gz", hash = "sha256:81aa267dddf68cbfe8029c42ca9ec6a4ab3b22371d1c450abc54422577b4512c", size = 187000 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/46/d1/e73b6ad76f0b1fb7f23c35c6d95dbc506a9c8804f43dda8cb5b0fa6331fd/dill-0.3.9-py3-none-any.whl", hash = "sha256:468dff3b89520b474c0397703366b7b95eebe6303f108adf9b19da1f702be87a", size = 119418 },
+]
+
+[[package]]
 name = "finnhub-python"
 version = "2.4.22"
 source = { registry = "https://pypi.org/simple" }
@@ -872,6 +881,7 @@ dependencies = [
     { name = "pandas" },
     { name = "plotly" },
     { name = "streamlit" },
+    { name = "tabs" },
     { name = "yfinance" },
 ]
 
@@ -883,6 +893,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "plotly", specifier = ">=5.24.1" },
     { name = "streamlit", specifier = ">=1.41.1" },
+    { name = "tabs", specifier = ">=0.7.0" },
     { name = "yfinance", specifier = ">=0.2.51" },
 ]
 
@@ -1052,6 +1063,16 @@ sdist = { url = "https://files.pythonhosted.org/packages/78/33/14b5ac0369ecf0af6
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c2/87/b2e162869500062a94dde7589c167367b5538dab6eacce2e7c0f00d5c9c5/streamlit-1.41.1-py2.py3-none-any.whl", hash = "sha256:0def00822480071d642e6df36cd63c089f991da3a69fd9eb4ab8f65ce27de4e0", size = 9100386 },
 ]
+
+[[package]]
+name = "tabs"
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dill" },
+    { name = "pandas" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cd/aa/774e24f221b4155099f25059570f02c304c3c23e518ec8c6e7aaeee913a7/tabs-0.7.0.tar.gz", hash = "sha256:7c7fe3af638b1a7463c70f8cfb43c8a4b3f7c74c54dcaa24d05c725806761261", size = 4565 }
 
 [[package]]
 name = "tenacity"

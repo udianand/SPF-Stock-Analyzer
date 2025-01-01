@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import finnhub
 import os
+import yfinance as yf
 
 def render(tickerSymbol):
     st.header("Research")

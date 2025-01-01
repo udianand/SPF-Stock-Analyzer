@@ -1,7 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-import pandas as pd
 from utils import get_stock_data
+
 
 def render(tickerSymbol, start_date, end_date):
     st.header("Technical Analysis")
