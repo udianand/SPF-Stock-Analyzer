@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import finnhub
-import os
 
 def render(tickerSymbol):
     st.header("Research")
@@ -11,7 +10,7 @@ def render(tickerSymbol):
         with st.spinner("Fetching research data..."):
             try:
                 # FINNHUB Recommendation Trends
-                fiinhub_api_key = os.environ['FINNHUB_API_KEY']
+                fiinhub_api_key = st.secrets["FINNHUB_API_KEY"]
                 finnhub_client = finnhub.Client(api_key=fiinhub_api_key)
                 latest_recommendation = finnhub_client.recommendation_trends(tickerSymbol)[0]
                 latest_period = latest_recommendation['period']

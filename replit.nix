@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.nano
     pkgs.tk
     pkgs.tcl
     pkgs.qhull
