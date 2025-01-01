@@ -40,6 +40,19 @@ def render(tickerSymbol):
                     labels={"Values": "Number of Recommendations", "Category": "Recommendation Type"}
                 )
                 st.plotly_chart(fig)
+                
+                # Display Key Statistics
+                st.subheader("Key Statistics")
+                stock = yf.Ticker(tickerSymbol)
+                info = stock.info
+                
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Market Cap", f"${info.get('marketCap', 'N/A'):,}")
+                with col2:
+                    st.metric("P/E Ratio", round(info.get('trailingPE', 0), 2))
+                with col3:
+                    st.metric("52 Week High", f"${info.get('fiftyTwoWeekHigh', 0):,.2f}")
 
             except Exception as e:
-                st.error("Error fetching research data.")
+                st.error(f"Error fetching research data: {str(e)}")

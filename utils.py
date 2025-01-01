@@ -9,6 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+@st.cache_data(ttl=3600)  # Cache data for 1 hour
 def get_stock_data(symbol, start_date, end_date):
     """
     Fetch stock data from Yahoo Finance

@@ -19,7 +19,10 @@ st.write("This is a stock market dashboard that allows you to view the stock mar
 
 # Add user inputs to sidebar
 st.sidebar.header("User Inputs")
-tickerSymbol = st.sidebar.text_input("Enter a ticker symbol eg AAPL, MSFT, TSLA", )
+tickerSymbol = st.sidebar.text_input("Enter a ticker symbol eg AAPL, MSFT, TSLA", ).upper()
+if tickerSymbol and not tickerSymbol.isalpha():
+    st.sidebar.error("Please enter a valid ticker symbol (letters only)")
+    tickerSymbol = None
 start_date = st.sidebar.date_input("Start Date",pd.to_datetime('2020-01-01'))
 end_date = st.sidebar.date_input("End Date", pd.to_datetime("today"))
 

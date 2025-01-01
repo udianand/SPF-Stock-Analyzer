@@ -25,6 +25,18 @@ def render(tickerSymbol, start_date, end_date):
                     hist_data["SMA_50"] = hist_data["Close"].rolling(window=50).mean()
                     hist_data["SMA_200"] = hist_data["Close"].rolling(window=200).mean()
                     st.line_chart(hist_data[["Close", "SMA_50", "SMA_200"]])
+                    
+                    # Volume Analysis
+                    st.subheader("Volume Analysis")
+                    fig_vol, ax_vol = plt.subplots(figsize=(10, 4))
+                    ax_vol.bar(hist_data.index, hist_data['Volume'])
+                    ax_vol.set_ylabel("Volume")
+                    ax_vol.set_title(f"{tickerSymbol} Trading Volume")
+                    st.pyplot(fig_vol)
+                    
+                    # Add volume moving average
+                    hist_data["Volume_MA"] = hist_data["Volume"].rolling(window=20).mean()
+                    st.line_chart(hist_data[["Volume", "Volume_MA"]])
                 else:
                     st.warning("No data available for the selected ticker.")
             except Exception as e:
