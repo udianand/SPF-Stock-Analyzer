@@ -1,7 +1,8 @@
 
 import streamlit as st
 import plotly.graph_objects as go
-from utils import get_stock_data
+from utils import get_stock_data, get_company_news
+from datetime import datetime
 
 def render(tickerSymbol, start_date, end_date):
     if tickerSymbol:
@@ -48,6 +49,21 @@ def render(tickerSymbol, start_date, end_date):
             )
             
             st.plotly_chart(fig, use_container_width=True)
+
+            # Display company news
+            st.subheader("Latest Company News")
+            news = get_company_news(tickerSymbol, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
+            
+            if news:
+                for article in news[:5]:  # Display latest 5 news items
+                    with st.expander(f"{article['headline']}"):
+                        st.write(f"**Source:** {article['source']}")
+                        st.write(f"**Summary:** {article['summary']}")
+                        st.write(f"**Date:** {datetime.fromtimestamp(article['datetime']).strftime('%Y-%m-%d %H:%M:%S')}")
+                        if article['url']:
+                            st.markdown(f"[Read more]({article['url']})")
+            else:
+                st.info("No recent news available for this company")
         else:
             st.warning("No data available for the selected ticker.")
     else:
