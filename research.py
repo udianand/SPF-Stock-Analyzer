@@ -14,8 +14,7 @@ def render(tickerSymbol):
                 fiinhub_api_key = st.secrets["FINNHUB_API_KEY"]
                 finnhub_client = finnhub.Client(api_key=fiinhub_api_key)
                 latest_recommendation = finnhub_client.recommendation_trends(tickerSymbol)[0]
-                latest_period = latest_recommendation['period']
-
+                
                 # Prepare data for the bar chart
                 data = {
                     "Category": ["Buy", "Hold", "Sell", "Strong Buy", "Strong Sell"],
@@ -27,8 +26,7 @@ def render(tickerSymbol):
                         latest_recommendation["strongSell"]
                     ]
                 }
-                df = pd.DataFrame(data)
-
+                
                 # Display recommendations
                 st.subheader(f"Stock Recommendation Analysis for {tickerSymbol}")
                 
