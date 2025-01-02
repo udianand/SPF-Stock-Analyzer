@@ -62,7 +62,7 @@ def render(tickerSymbol):
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # Display latest recommendations as metrics
-                st.subheader(f"Latest Recommendations (Period: {latest['period']})")
+                st.subheader(f"Latest Recommendations (Period: {latest_recommendation['period']})")
                 latest = recommendations[0]
                 col1, col2, col3, col4, col5 = st.columns(5)
                 with col1:
