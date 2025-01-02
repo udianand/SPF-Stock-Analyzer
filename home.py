@@ -9,61 +9,62 @@ def render(tickerSymbol, start_date, end_date):
         hist_data, stock_info = get_stock_data(tickerSymbol, start_date, end_date)
         
         if hist_data is not None and stock_info is not None:
-            # Display stock info
-            st.header(f"{stock_info.get('longName', tickerSymbol)} ({tickerSymbol})")
+            # Main header with company info
+            st.title(f"{stock_info.get('longName', tickerSymbol)} ({tickerSymbol})")
             
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("Industry", stock_info.get('industry', 'N/A'))
-            with col2:
-                st.metric("Sector", stock_info.get('sector', 'N/A'))
+            # Company metadata in a container
+            with st.container():
+                st.subheader("Company Information")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric("Industry", stock_info.get('industry', 'N/A'))
+                    st.metric("Market Cap", f"${stock_info.get('marketCap', 0)/1e9:.2f}B")
+                with col2:
+                    st.metric("Sector", stock_info.get('sector', 'N/A'))
+                    current_price = hist_data['Close'][-1]
+                    price_change = ((current_price - hist_data['Close'][0]) / hist_data['Close'][0]) * 100
+                    st.metric("Price", f"${current_price:.2f}", f"{price_change:.2f}%")
             
-            # Display price metrics
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                current_price = hist_data['Close'][-1]
-                st.metric("Current Price", f"${current_price:.2f}")
-            with col2:
-                market_cap = stock_info.get('marketCap', 0)
-                market_cap_b = market_cap / 1e9 if market_cap else 0
-                st.metric("Market Cap", f"${market_cap_b:.2f}B")
-            with col3:
-                price_change = ((current_price - hist_data['Close'][0]) / hist_data['Close'][0]) * 100
-                st.metric("Price Change", f"{price_change:.2f}%")
-
-            # Create price chart
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(
-                x=hist_data.index,
-                y=hist_data['Close'],
-                name='Close Price',
-                line=dict(color='blue')
-            ))
+            # Price chart in its own container
+            with st.container():
+                st.subheader("Price History")
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(
+                    x=hist_data.index,
+                    y=hist_data['Close'],
+                    name='Close Price',
+                    line=dict(color='#26A69A', width=2)
+                ))
+                
+                fig.update_layout(
+                    yaxis_title='Price (USD)',
+                    xaxis_title='Date',
+                    height=500,
+                    showlegend=True,
+                    plot_bgcolor='white',
+                    margin=dict(t=20)
+                )
+                st.plotly_chart(fig, use_container_width=True)
             
-            fig.update_layout(
-                title=f"{tickerSymbol} Historical Price",
-                yaxis_title='Price (USD)',
-                xaxis_title='Date',
-                height=500,
-                showlegend=True
-            )
-            
-            st.plotly_chart(fig, use_container_width=True)
-
-            # Display company news
-            st.subheader("Latest Company News")
-            news = get_company_news(tickerSymbol, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
-            
-            if news:
-                for article in news[:5]:  # Display latest 5 news items
-                    with st.expander(f"{article['headline']}"):
-                        st.write(f"**Source:** {article['source']}")
-                        st.write(f"**Summary:** {article['summary']}")
-                        st.write(f"**Date:** {datetime.fromtimestamp(article['datetime']).strftime('%Y-%m-%d %H:%M:%S')}")
-                        if article['url']:
-                            st.markdown(f"[Read more]({article['url']})")
-            else:
-                st.info("No recent news available for this company")
+            # News section with expander
+            with st.expander("Latest Company News", expanded=True):
+                news = get_company_news(tickerSymbol, start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
+                
+                if news:
+                    for idx, article in enumerate(news[:5]):
+                        col1, col2 = st.columns([3, 1])
+                        with col1:
+                            st.markdown(f"**{article['headline']}**")
+                            st.write(article['summary'])
+                        with col2:
+                            st.write(f"Source: {article['source']}")
+                            st.write(datetime.fromtimestamp(article['datetime']).strftime('%Y-%m-%d'))
+                            if article['url']:
+                                st.markdown(f"[Read more]({article['url']})")
+                        if idx < 4:  # Don't add separator after last item
+                            st.divider()
+                else:
+                    st.info("No recent news available for this company")
         else:
             st.warning("No data available for the selected ticker.")
     else:
